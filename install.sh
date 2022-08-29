@@ -23,4 +23,3 @@ pip install -e .
 
 conda install protobuf -y
 pip install tensorflow-gpu==2.4.1
-bash /human_aware_rl/run_tests.sh
