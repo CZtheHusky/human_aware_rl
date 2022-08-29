@@ -141,3 +141,4 @@ transfer_agent.sh
 
 # PyCharm
 .idea/
+docker/Miniconda3-latest-Linux-x86_64.sh
