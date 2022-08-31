@@ -2,6 +2,7 @@
 import argparse, os, sys, logging
 from overcooked_ai_py.agents.benchmarking import AgentEvaluator
 import numpy as np
+import time
 
 # environment variable that tells us whether this code is running on the server or not
 LOCAL_TESTING = os.getenv('RUN_ENV', 'production') == 'local'
@@ -422,7 +423,11 @@ def main(params):
             "log_to_driver" : params['verbose'],
             "logging_level" : logging.INFO if params['verbose'] else logging.CRITICAL
     }
-    ray.init(**init_params)
+    try:
+        ray.init(**init_params)
+    except ConnectionError as e:
+        print('Error', e)
+        print(e.__traceback__)
     register_env("overcooked_multi_agent", _env_creater)
     ModelCatalog.register_custom_model("MyPPOModel", RllibLSTMPPOModel if params['model_params']['use_lstm'] else RllibPPOModel)
 

@@ -18,6 +18,7 @@ import numpy as np
 import os, copy, dill
 import ray
 import logging
+import time
 
 action_space = gym.spaces.Discrete(len(Action.ALL_ACTIONS))
 obs_space = gym.spaces.Discrete(len(Action.ALL_ACTIONS))
@@ -512,7 +513,12 @@ def gen_trainer_from_params(params):
             "log_to_driver" : params['verbose'],
             "logging_level" : logging.INFO if params['verbose'] else logging.CRITICAL
         }
-        ray.init(**init_params)
+        try:
+            ray.init(**init_params)
+        except ConnectionError as e:
+            print('Error', e)
+            print(e.__traceback__)
+
     register_env("overcooked_multi_agent", params['ray_params']['env_creator'])
     ModelCatalog.register_custom_model(params['ray_params']['custom_model_id'], params['ray_params']['custom_model_cls'])
 
