@@ -36,6 +36,7 @@ RUN apt-get install -y \
     build-essential \
     git \
     libjpeg-dev \
+    cmake \
     tmux vim wget htop 
 
 # RUN pip3 config set global.index-url https://mirrors.aliyun.com/pypi/simple
